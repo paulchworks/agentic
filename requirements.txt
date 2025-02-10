@@ -16,6 +16,5 @@ langchain-text-splitters==0.3.5
 langsmith==0.1.147
 onnxruntime==1.20.1
 openai==1.55.3
-python==3.10.15
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.0
