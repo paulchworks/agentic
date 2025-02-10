@@ -9,27 +9,52 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+- stage: Build
+  displayName: 'Build Application'
+  jobs:
+  - job: BuildJob
+    displayName: 'Build and Package Application'
+    steps:
+    - script: echo Building the application...
+      displayName: 'Start Build Process'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    - script: |
+        python --version
+        pip install -r requirements.txt
+        pip install -e .
+      displayName: 'Install Dependencies'
 
-- script: pip install -r requirements.txt
-  displayName: 'Install Python dependencies from requirements.txt'
+    - script: |
+        echo Creating deployment package...
+        zip -r $(Build.ArtifactStagingDirectory)/app.zip .
+      displayName: 'Package Application'
 
-- script: pip install -e .
-  displayName: 'Install the package in editable mode'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/app.zip'
+        artifact: 'drop'
+        publishLocation: 'pipeline'
 
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
-    appType: 'webAppLinux'
-    WebAppName: 'agentic-paulch'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    RuntimeStack: 'PYTHON|3.11'
-    StartupCommand: 'cd src/agentic && panel serve main.py --port $PORT --allow-websocket-origin=* --address=0.0.0.0'
+- stage: Deploy
+  displayName: 'Deploy Application'
+  dependsOn: Build
+  jobs:
+  - job: DeployJob
+    displayName: 'Deploy to Azure App Service'
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'drop'
+        targetPath: '$(Pipeline.Workspace)'
+
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
+        appType: 'webAppLinux'
+        WebAppName: 'agentic-paulch'
+        packageForLinux: '$(Pipeline.Workspace)/drop/app.zip'
+        RuntimeStack: 'PYTHON|3.11'
+        StartupCommand: 'cd src/agentic && panel serve main.py --port $PORT --allow-websocket-origin=* --address=0.0.0.0'
