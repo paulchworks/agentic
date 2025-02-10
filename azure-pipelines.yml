@@ -25,7 +25,7 @@ stages:
 
     - script: |
         echo Creating deployment package...
-        zip -r $(Build.ArtifactStagingDirectory)/app.zip src/ requirements.txt setup.py
+        zip -r $(Build.ArtifactStagingDirectory)/app.zip src/ requirements.txt
       displayName: 'Package Application'
 
     - script: unzip -l $(Build.ArtifactStagingDirectory)/app.zip
@@ -67,4 +67,4 @@ stages:
         WebAppName: 'agentic-paulch'
         packageForLinux: '$(Pipeline.Workspace)/app.zip'
         RuntimeStack: 'PYTHON|3.11'
-        StartupCommand: 'source /antenv/bin/activate && cd src/latest_ai_development && panel serve main.py --port $PORT --allow-websocket-origin=* --address=0.0.0.0'
+        StartupCommand: '. /antenv/bin/activate && cd src/latest_ai_development && panel serve main.py --port $PORT --allow-websocket-origin=* --address=0.0.0.0'
