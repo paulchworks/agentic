@@ -24,5 +24,5 @@ steps:
 - script: pip install -e .
   displayName: 'Install the package in editable mode'
 
-- script: cd src/agentic && panel serve main.py
-  displayName: 'Navigate to src/agentic and start Panel server'
+- script: cd src/latest_ai_development && panel serve main.py
+  displayName: 'Navigate to src/latest_ai_development and start Panel server'
