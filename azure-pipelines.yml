@@ -61,4 +61,4 @@ stages:
         WebAppName: 'agentic-paulch'
         packageForLinux: '$(Pipeline.Workspace)/app.zip'
         RuntimeStack: 'PYTHON|3.11'
-        StartupCommand: 'cd src/latest_ai_development && panel serve main.py'
+        StartupCommand: 'cd src/latest_ai_development && panel serve main.py --port 8000'
