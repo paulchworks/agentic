@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
@@ -25,10 +20,16 @@ stages:
         pip install -e .
       displayName: 'Install Dependencies'
 
+    - script: ls -R .
+      displayName: 'List Working Directory Contents'
+
     - script: |
         echo Creating deployment package...
         zip -r $(Build.ArtifactStagingDirectory)/app.zip .
       displayName: 'Package Application'
+
+    - script: ls -R $(Build.ArtifactStagingDirectory)
+      displayName: 'List Build Artifacts'
 
     - task: PublishPipelineArtifact@1
       inputs:
@@ -48,6 +49,9 @@ stages:
         buildType: 'current'
         artifactName: 'drop'
         targetPath: '$(Pipeline.Workspace)'
+
+    - script: ls -R $(Pipeline.Workspace)
+      displayName: 'List Downloaded Artifacts'
 
     - task: AzureRmWebAppDeployment@4
       inputs:
