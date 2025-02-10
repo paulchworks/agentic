@@ -24,7 +24,6 @@ azure-mgmt-core==1.5.0
 azure-search-documents==11.4.0b6
 azure-storage-file-datalake==12.14.0
 azure-storage-file-share==12.20.0
-azureml-inference-server-http==1.4.0
 azureml-mlflow==1.57.0
 backoff==2.2.1
 backports.tarfile==1.2.0
