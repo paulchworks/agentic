@@ -1,0 +1,28 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+- script: pip install -r requirements.txt
+  displayName: 'Install Python dependencies from requirements.txt'
+
+- script: pip install -e .
+  displayName: 'Install the package in editable mode'
+
+- script: cd src/agentic && panel serve main.py
+  displayName: 'Navigate to src/agentic and start Panel server'
