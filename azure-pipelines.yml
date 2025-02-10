@@ -25,8 +25,11 @@ stages:
 
     - script: |
         echo Creating deployment package...
-        zip -r $(Build.ArtifactStagingDirectory)/app.zip .
+        zip -r $(Build.ArtifactStagingDirectory)/app.zip src/ requirements.txt setup.py
       displayName: 'Package Application'
+
+    - script: unzip -l $(Build.ArtifactStagingDirectory)/app.zip
+      displayName: 'List Contents of Created ZIP File'
 
     - script: ls -R $(Build.ArtifactStagingDirectory)
       displayName: 'List Build Artifacts'
@@ -53,12 +56,15 @@ stages:
     - script: ls -R $(Pipeline.Workspace)
       displayName: 'List Downloaded Artifacts'
 
+    - script: unzip -l $(Pipeline.Workspace)/drop/app.zip
+      displayName: 'List Contents of Downloaded ZIP File'
+
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
         azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
         appType: 'webAppLinux'
         WebAppName: 'agentic-paulch'
-        packageForLinux: '$(Pipeline.Workspace)/app.zip'
+        packageForLinux: '$(Pipeline.Workspace)/drop/app.zip'
         RuntimeStack: 'PYTHON|3.10'
-        StartupCommand: 'cd src/latest_ai_development && panel serve main.py --port 5006'
+        StartupCommand: 'source /antenv/bin/activate && cd src/latest_ai_development && panel serve main.py --port $PORT --allow-websocket-origin=* --address=0.0.0.0'
