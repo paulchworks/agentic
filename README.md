@@ -35,3 +35,6 @@ The agentic Crew is composed of multiple AI agents, each with unique roles, goal
 - cd src/agentic
 - run "panel serve main.py"
 
+## A successful build and run will look like this: 
+
+![image](https://github.com/user-attachments/assets/8f0d75e7-3843-4dba-a9b1-3d1083b59639)
