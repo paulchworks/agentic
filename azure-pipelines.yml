@@ -24,3 +24,12 @@ steps:
 - script: pip install -e .
   displayName: 'Install the package in editable mode'
 
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
+    appType: 'webAppLinux'
+    WebAppName: 'agentic-paulch'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'PYTHON|3.11'
+    StartupCommand: 'cd src/agentic && panel serve main.py --port $PORT --allow-websocket-origin=* --address=0.0.0.0'
