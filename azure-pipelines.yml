@@ -59,6 +59,6 @@ stages:
         azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
         appType: 'webAppLinux'
         WebAppName: 'agentic-paulch'
-        packageForLinux: '$(Pipeline.Workspace)/drop/app.zip'
+        packageForLinux: '$(Pipeline.Workspace)/app.zip'
         RuntimeStack: 'PYTHON|3.11'
         StartupCommand: 'cd src/agentic && panel serve main.py --port $PORT --allow-websocket-origin=* --address=0.0.0.0'
