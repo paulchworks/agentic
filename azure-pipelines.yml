@@ -17,8 +17,8 @@ stages:
     - script: |
         python --version
         pip install -r requirements.txt
-        pip install -e .
         crewai install
+        pip install -e .
       displayName: 'Install Dependencies'
 
     - script: ls -R .
