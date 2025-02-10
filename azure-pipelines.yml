@@ -17,7 +17,6 @@ stages:
     - script: |
         python --version
         pip install -r requirements.txt
-        crewai install
         pip install -e .
       displayName: 'Install Dependencies'
 
@@ -26,7 +25,7 @@ stages:
 
     - script: |
         echo Creating deployment package...
-        zip -r $(Build.ArtifactStagingDirectory)/app.zip src/ requirements.txt
+        zip -r $(Build.ArtifactStagingDirectory)/app.zip src/ requirements.txt setup.py
       displayName: 'Package Application'
 
     - script: unzip -l $(Build.ArtifactStagingDirectory)/app.zip
@@ -68,5 +67,5 @@ stages:
         WebAppName: 'agentic-paulch'
         packageForLinux: '$(Pipeline.Workspace)/app.zip'
         RuntimeStack: 'PYTHON|3.10'
-        StartupCommand: 'cd src/latest_ai_development && panel serve main.py --port 5006'
+        StartupCommand: '. /antenv/bin/activate && cd src/latest_ai_development && panel serve main.py --port $PORT --allow-websocket-origin=* --address=0.0.0.0'
     
