@@ -68,5 +68,5 @@ stages:
         WebAppName: 'agentic-paulch'
         packageForLinux: '$(Pipeline.Workspace)/app.zip'
         RuntimeStack: 'PYTHON|3.11'
-        StartupCommand: '. /antenv/bin/activate && cd src/latest_ai_development && panel serve main.py --port 5006 --allow-websocket-origin=* --address=0.0.0.0'
+        StartupCommand: '. $VIRTUAL_ENV/bin/activate && cd src/latest_ai_development && panel serve main.py --port 5006 --allow-websocket-origin=* --address=0.0.0.0'
     
