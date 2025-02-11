@@ -14,7 +14,6 @@ attrs==24.2.0
 auth0-python==4.8.0
 azure-ai-documentintelligence==1.0.0b2
 azure-ai-formrecognizer==3.3.3
-azure-ai-ml==1.22.4
 azure-common==1.1.28
 azure-core==1.32.0
 azure-cosmos==4.5.0
@@ -22,10 +21,7 @@ azure-identity==1.15.0
 azure-keyvault-secrets==4.9.0
 azure-mgmt-core==1.5.0
 azure-search-documents==11.4.0b6
-azure-storage-blob==12.17.0
-azure-storage-file-datalake==12.14.0
 azure-storage-file-share==12.20.0
-azureml-inference-server-http==1.4.0
 azureml-mlflow==1.57.0
 backoff==2.2.1
 backports.tarfile==1.2.0
