@@ -15,7 +15,6 @@ stages:
       displayName: 'Start Build Process'
 
     - script: |
-        pip install --upgrade pip
         pip install -r requirements.txt
         crewai install
       displayName: 'Install Dependencies'
@@ -63,7 +62,7 @@ stages:
       inputs:
         azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
         appType: 'webAppLinux'
-        appName: 'agentp1'
+        appName: 'agentp2'
         package: '$(Pipeline.Workspace)/app.zip'
         runtimeStack: 'PYTHON|3.10'
         startUpCommand: 'cd src/latest_ai_development && panel serve main.py'
