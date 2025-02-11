@@ -70,3 +70,11 @@ stages:
         RuntimeStack: 'PYTHON|3.11'
         StartupCommand: '. /antenv/bin/activate && cd src/latest_ai_development && panel serve main.py --port 5006 --allow-websocket-origin=* --address=0.0.0.0'
     
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
+        appType: 'webAppLinux'
+        appName: 'agentic-paulch'
+        package: '$(Pipeline.Workspace)/app.zip'
+        runtimeStack: 'PYTHON|3.11'
+        startUpCommand: '. /antenv/bin/activate && cd src/latest_ai_development && panel serve main.py --port 5006 --allow-websocket-origin=* --address=0.0.0.0'
