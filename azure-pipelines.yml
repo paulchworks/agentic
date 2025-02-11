@@ -15,6 +15,7 @@ stages:
       displayName: 'Start Build Process'
 
     - script: |
+        pip install --upgrade pip
         pip install -r requirements.txt
         crewai install
         pip install -e .
@@ -64,8 +65,8 @@ stages:
         ConnectionType: 'AzureRM'
         azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
         appType: 'webAppLinux'
-        WebAppName: 'agentic-paulch'
+        WebAppName: 'agent-paulch'
         packageForLinux: '$(Pipeline.Workspace)/app.zip'
-        RuntimeStack: 'PYTHON|3.11'
-        StartupCommand: 'cd src/latest_ai_development && panel serve main.py --port 5006 --allow-websocket-origin=* --address=0.0.0.0'
+        RuntimeStack: 'PYTHON|3.10'
+        StartupCommand: 'cd src/latest_ai_development && panel serve main.py'
 
