@@ -64,8 +64,9 @@ stages:
         ConnectionType: 'AzureRM'
         azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
         appType: 'webAppLinux'
-        WebAppName: 'agent-paulch'
+        WebAppName: 'agentp1'
         packageForLinux: '$(Pipeline.Workspace)/app.zip'
         RuntimeStack: 'PYTHON|3.10'
         StartupCommand: 'cd src/latest_ai_development && panel serve main.py'
+
 
