@@ -18,3 +18,4 @@ openai==1.55.3
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.0
 panel==1.6.0
+uv==0.5.26
