@@ -21,7 +21,6 @@ stages:
         pip install --upgrade pip
         pip install -r requirements.txt
         crewai install
-        pip install -e .
       displayName: 'Install Dependencies'
 
     - script: ls -R .
@@ -71,5 +70,5 @@ stages:
         WebAppName: 'agentic-paulch'
         packageForLinux: '$(Pipeline.Workspace)/app.zip'
         RuntimeStack: 'PYTHON|3.11'
-        StartupCommand: '. /antenv/bin/activate && cd src/latest_ai_development && panel serve main.py --port 5006 --allow-websocket-origin=* --address=0.0.0.0'
+        StartupCommand: 'cd src/latest_ai_development && panel serve main.py --port 5006 --allow-websocket-origin=* --address=0.0.0.0'
 
