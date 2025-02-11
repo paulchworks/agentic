@@ -59,14 +59,21 @@ stages:
     - script: unzip -l $(Pipeline.Workspace)/app.zip
       displayName: 'List Contents of Downloaded ZIP File'
 
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
+        appType: 'webAppLinux'
+        appName: 'agentp1'
+        package: '$(Pipeline.Workspace)/app.zip'
+        runtimeStack: 'PYTHON|3.10'
+        startUpCommand: 'cd src/latest_ai_development && panel serve main.py'
+    
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
         azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
         appType: 'webAppLinux'
-        WebAppName: 'agentp1'
+        WebAppName: 'agent'
         packageForLinux: '$(Pipeline.Workspace)/app.zip'
         RuntimeStack: 'PYTHON|3.10'
         StartupCommand: 'cd src/latest_ai_development && panel serve main.py'
-
-
