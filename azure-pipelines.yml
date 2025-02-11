@@ -16,6 +16,9 @@ stages:
 
     - script: |
         python --version
+        python -m venv antenv
+        source antenv/bin/activate
+        pip install --upgrade pip
         pip install -r requirements.txt
         crewai install
         pip install -e .
@@ -26,7 +29,7 @@ stages:
 
     - script: |
         echo Creating deployment package...
-        zip -r $(Build.ArtifactStagingDirectory)/app.zip src/ requirements.txt
+        zip -r $(Build.ArtifactStagingDirectory)/app.zip src/ requirements.txt antenv/
       displayName: 'Package Application'
 
     - script: unzip -l $(Build.ArtifactStagingDirectory)/app.zip
@@ -69,12 +72,4 @@ stages:
         packageForLinux: '$(Pipeline.Workspace)/app.zip'
         RuntimeStack: 'PYTHON|3.11'
         StartupCommand: '. /antenv/bin/activate && cd src/latest_ai_development && panel serve main.py --port 5006 --allow-websocket-origin=* --address=0.0.0.0'
-    
-    - task: AzureWebApp@1
-      inputs:
-        azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
-        appType: 'webAppLinux'
-        appName: 'agentic-paulch'
-        package: '$(Pipeline.Workspace)/app.zip'
-        runtimeStack: 'PYTHON|3.11'
-        startUpCommand: '. /antenv/bin/activate && cd src/latest_ai_development && panel serve main.py --port 5006 --allow-websocket-origin=* --address=0.0.0.0'
+
