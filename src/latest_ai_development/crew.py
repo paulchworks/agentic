@@ -1,7 +1,7 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 
-# If you want to run a snippet of code before or after the crew starts, 
+# If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 
@@ -13,8 +13,8 @@ from crewai.tasks.task_output import TaskOutput
 
 def print_output(output: TaskOutput):
 
-	message = output.raw
-	chat_interface.send(message, user=output.agent, respond=False)
+				message = output.raw
+				chat_interface.send(message, user=output.agent, respond=False)
 
 @CrewBase
 class LatestAiDevelopment():
