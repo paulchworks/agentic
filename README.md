@@ -32,7 +32,7 @@ The agentic Crew is composed of multiple AI agents, each with unique roles, goal
 ## Build and Run
 - run "pip install -r requirements.txt"
 - run "pip install -e ."
-- cd src/agentic
+- cd src/latest_ai_development
 - run "panel serve main.py"
 
 ## A successful build and run will look like this: 
