@@ -67,6 +67,6 @@ stages:
         appName: 'agentp2'
         package: '$(Pipeline.Workspace)/app.zip'
         runtimeStack: 'PYTHON|3.10'
-        startUpCommand: '. .venv/bin/activate && cd src/latest_ai_development && panel serve main.py --port 8000 --allow-websocket-origin=*'
+        startUpCommand: 'cd src/latest_ai_development && panel serve main.py --port 8000 --allow-websocket-origin=*'
     
 
