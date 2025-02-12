@@ -152,7 +152,6 @@ langchain-experimental==0.3.4
 langchain-openai==0.2.11
 langchain-text-splitters==0.3.5
 langsmith==0.1.147
--e git+https://github.com/paulchworks/agentic.git@0942ddbe51cbd34872cb2aefc5361da6aadfdd63#egg=latest_ai_development
 lazy-object-proxy==1.10.0
 linkify-it-py==2.0.3
 litellm==1.59.8
