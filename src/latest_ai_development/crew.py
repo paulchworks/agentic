@@ -12,8 +12,8 @@ chat_interface = pn.chat.ChatInterface()
 from crewai.tasks.task_output import TaskOutput
 
 def print_output(output: TaskOutput):
-	message = output.raw
-	chat_interface.send(message, user=output.agent, respond=False)
+    message = output.raw
+    chat_interface.send(message, user=output.agent, respond=False)
 
 @CrewBase
 class LatestAiDevelopment():
