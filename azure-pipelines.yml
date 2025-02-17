@@ -42,7 +42,7 @@ stages:
 
     - script: |
         echo Creating deployment package...
-        zip -r $(Build.ArtifactStagingDirectory)/app.zip src/ requirements.txt main.py
+        zip -r $(Build.ArtifactStagingDirectory)/app.zip src/ requirements.txt main.py .env
       displayName: 'Package Application'
 
     - script: unzip -l $(Build.ArtifactStagingDirectory)/app.zip
