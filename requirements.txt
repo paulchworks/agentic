@@ -1,4 +1,4 @@
 crewai
 crewai-tools
 pysqlite3-binary
---upgrade panel
+panel
