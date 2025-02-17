@@ -1,4 +1,5 @@
 crewai
 crewai-tools
-pysqlite3-binary
+pysqlite3-binary # for sqlite3 database during actual deployment
 panel
+#python-dotenv # for loading environment variables from .env file when running locally
