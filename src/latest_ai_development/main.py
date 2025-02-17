@@ -6,6 +6,12 @@ load_dotenv()
 
 pn.extension(theme='default')
 
+DATA_DIR = os.path.join(os.getenv('HOME', '/home'), 'data')
+os.makedirs(DATA_DIR, exist_ok=True)
+
+__import__('pysqlite3')
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 from latest_ai_development.crew import LatestAiDevelopment
 from latest_ai_development.crew import chat_interface
 import threading
