@@ -1,6 +1,6 @@
 import os
 import sys
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import panel as pn
 
 #from dotenv import load_dotenv # Import the load_dotenv function from the dotenv module when running locally
@@ -58,16 +58,21 @@ def initiate_chat(message):
         chat_interface.send(f"An error occurred: {e}", user="Assistant", respond=False)
     crew_started = False
 
+lock = threading.Lock()
+
 def callback(contents: str, user: str, instance: pn.chat.ChatInterface):
     global crew_started
     global user_input
-
-    if not crew_started:
-        thread =  threading.Thread(target=initiate_chat, args=(contents,))
-        thread.start()
-    
-    else:
-        user_input = contents
+    with lock:
+        if not crew_started:
+            thread = threading.Thread(target=initiate_chat, args=(contents,))
+            thread.start()
+        if not crew_started:
+            thread =  threading.Thread(target=initiate_chat, args=(contents,))
+            thread.start()
+        
+        else:
+            user_input = contents
 
 chat_interface.callback = callback
 
