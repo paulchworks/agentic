@@ -1,3 +1,5 @@
+Flask
+Flask-Cors
 crewai
 crewai-tools
 pysqlite3-binary # for sqlite3 database during actual deployment

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div id="chat-box"></div>
+    <div id="input-box">
+        <input type="text" id="user-input" placeholder="Type your message here..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            if (!userInput.trim()) return;
+
+            // Send the message to the server
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userInput })
+            });
+
+            // Clear the input box
+            document.getElementById('user-input').value = '';
+        }
+
+        function fetchMessages() {
+            fetch('/messages')
+                .then(response => response.json())
+                .then(messages => {
+                    messages.forEach(msg => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = `message ${msg.user.toLowerCase()}`;
+                        messageDiv.textContent = `${msg.user}: ${msg.message}`;
+                        chatBox.appendChild(messageDiv);
+                    });
+                    chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
+                });
+        }
+
+        // Poll for new messages every second
+        setInterval(fetchMessages, 1000);
+    </script>
+</body>
+</html>
