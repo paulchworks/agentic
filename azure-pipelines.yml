@@ -84,6 +84,6 @@ stages:
         WebAppName: 'agentp2'
         package: '$(Pipeline.Workspace)/app.zip'
         runtimeStack: 'PYTHON|3.10'
-        startUpCommand: 'panel serve main.py --port $PORT --allow-websocket-origin=*'
+        startUpCommand: 'gunicorn --bind 0.0.0.0:$PORT -w 2 --threads 4 app:app'
     
 
