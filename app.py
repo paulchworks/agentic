@@ -1,19 +1,29 @@
+import warnings
 import os
 import sys
+import logging
 from flask import Flask, request, jsonify, render_template
 from threading import Thread, Lock
-from src.latest_ai_development.crew import LatestAiDevelopment
 from crewai.agents.agent_builder.base_agent_executor_mixin import CrewAgentExecutorMixin
 import time
 
-# Initialize Flask app
-app = Flask(__name__)
+#from dotenv import load_dotenv # Import the load_dotenv function from the dotenv module when running locally
+#load_dotenv() # Load environment variables from the .env file when running locally 
 
-# Constants and configurations
 DATA_DIR = os.path.join(os.getenv('HOME', '/home'), 'data')
 os.makedirs(DATA_DIR, exist_ok=True)
+
 __import__('pysqlite3')
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
+# Import the crew
+from src.latest_ai_development.crew import LatestAiDevelopment
+
+logging.basicConfig(level=logging.INFO)
+warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
+
+# Initialize Flask app
+app = Flask(__name__)
 
 # Global variables for managing state
 user_input = None
@@ -94,4 +104,6 @@ def get_messages():
 message_queue = []
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Run the Flask app
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port , debug=True)
