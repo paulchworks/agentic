@@ -11,6 +11,13 @@ stages:
   - job: BuildJob
     displayName: 'Build and Package Application'
     steps:
+    - task: AzureKeyVault@2
+      inputs:
+        azureSubscription: 'Default Subscription (0f21e802-aeff-4e83-977e-a5bde15f65c1)'
+        KeyVaultName: 'agentic7441751515'
+        SecretsFilter: 'openai-api-key'
+        RunAsPreJob: true
+
     - script: echo Building the application...
       displayName: 'Start Build Process'
 
@@ -20,6 +27,15 @@ stages:
         pip install -r requirements.txt
         crewai install
       displayName: 'Install Dependencies'
+    
+    - script: |
+        echo Creating .env file...
+        echo "MODEL=gpt-4o-mini" > .env
+        echo "OPENAI_API_KEY= $(openai-api-key)" >> .env
+      displayName: 'Generate .env File'
+      env:
+        MODEL: gpt-4o-mini
+        OPENAI_API_KEY: $(openai-api-key) #Secret from Key Vault
 
     - script: ls -R .
       displayName: 'List Working Directory Contents'
@@ -60,11 +76,12 @@ stages:
     - script: unzip -l $(Pipeline.Workspace)/app.zip
       displayName: 'List Contents of Downloaded ZIP File'
 
-    - task: AzureWebApp@1
+    - task: AzureRmWebAppDeployment@4
       inputs:
+        ConnectionType: 'AzureRM'
         azureSubscription: 'Default Subscription(0f21e802-aeff-4e83-977e-a5bde15f65c1)'
         appType: 'webAppLinux'
-        appName: 'agentp2'
+        WebAppName: 'agentp2'
         package: '$(Pipeline.Workspace)/app.zip'
         runtimeStack: 'PYTHON|3.10'
         startUpCommand: 'panel serve main.py --port $PORT --allow-websocket-origin=*'
