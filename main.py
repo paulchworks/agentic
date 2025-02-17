@@ -13,8 +13,8 @@ os.makedirs(DATA_DIR, exist_ok=True)
 __import__('pysqlite3')
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
-from crew import LatestAiDevelopment
-from crew import chat_interface
+from src.latest_ai_development.crew import LatestAiDevelopment
+from src.latest_ai_development.crew import chat_interface
 import threading
 
 from crewai.agents.agent_builder.base_agent_executor_mixin import CrewAgentExecutorMixin
