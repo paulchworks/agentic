@@ -3,7 +3,8 @@ import sys
 from dotenv import load_dotenv
 import panel as pn
 
-load_dotenv()
+#from dotenv import load_dotenv # Import the load_dotenv function from the dotenv module when running locally
+#load_dotenv() # Load environment variables from the .env file when running locally
 
 pn.extension(theme='default')
 
